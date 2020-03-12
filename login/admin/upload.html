@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+    <body>
+<script>
+
+function reset_file(name)
+{
+    var elem=document.myform(name);
+    elem.parentNode.innerHTML=elem.parentNode.innerHTML;
+    return false;
+}
+
+function clickupload()
+{
+    if(document.myform.fileupload.value.length==0){
+        alert("กรุณาเลือกไฟล์รูปภาพ");
+        return false;
+    }
+
+    alert("กำลังอัพโหลดโปรดรอ");
+    document.myform.btn.disabled=true;
+    return true;
+}
+
+function uploadok(pathfile)
+{
+    document.myform.fileupload.style.display="none";
+    document.myform.btn.style.display="none";
+    document.myform.txt.style.display="";
+    document.myform.txt.value=pathfile;
+    alert("Upload complete\n"+pathfile);
+    return true;
+}
+
+function over_size(size)
+{
+    alert("File not over 200 KB\n"+size+" KB");
+    reset_file("fileupload");
+    document.myform.btn.disabled=false;
+    return false;
+}
+
+function wrong_type(type)
+{
+    alert("Please upload only file type\nGif, Jpg, Png, Pdf, Doc, Docx, Tiff\n"+type);
+    reset_file("fileupload");
+    document.myform.btn.disabled=false;
+    return false;
+}
+</script>
+<iframe id="uploadtarget" name="uploadtarget"></iframe>
+
+<form name="myform" action="upload.php" method="post" enctype="multipart/form-data" onsubmit="return clickupload();" target="uploadtarget">
+<input name="fileupload" type="file"><br>
+<font color="red" size="2">Not over 200 KB (Gif, Jpg, Pdf, Doc, Docx, Tiff)</font><br>
+<input id="btn" name="btn" type="submit" value="Upload">
+</form>
+</body>
+</html>
